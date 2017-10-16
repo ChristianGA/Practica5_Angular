@@ -1,11 +1,11 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import { environment } from '../environments/environment';
 import { Post } from './post';
+import { Category } from './category';
 
 @Injectable()
 export class PostService {
@@ -91,8 +91,14 @@ export class PostService {
     |                                                                          |
     | Una pista más, por si acaso: HttpParams.                                 |
     |=========================================================================*/
-
-     return this._http.get<Post[]>(`${environment.backendUri}/posts`);
+    const ahora = Date.now();
+    return this._http
+      .get<Post[]>(`${environment.backendUri}/posts?publicationDate_lte=${ahora}&_sort=publicationDate&_order=DESC `)
+      .map((posts: Post[]) => {
+        return posts.filter((post: Post): boolean => {
+          return post.categories.find((category: Category): boolean => category.id === id) !== undefined;
+        });
+      });
   }
 
   getPostDetails(id: number): Observable<Post> {

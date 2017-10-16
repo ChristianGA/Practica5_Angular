@@ -22,8 +22,7 @@ export class CategoryBoxComponent {
   | que dicho clic se realiza en el template de este componente, necesitas,  |
   | además, un manejador para el mismo.                                      |
   |=========================================================================*/
-  soloEstaCategoria(): void {
-    this.clickParaCategoria.emit(this.categories);
-    console.log("entro aqui");
+  soloEstaCategoria(category: Category): void {
+    this.clickParaCategoria.emit(category);
   }
 }

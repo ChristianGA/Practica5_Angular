@@ -57,7 +57,6 @@ export class PostDetailsComponent implements OnInit {
   |=========================================================================*/
   verMasCategoria(ruta: Category){
     const categoryID = ruta.id;
-    console.log(categoryID);
     this._router.navigate(['/posts/categories', categoryID])
   }
 
