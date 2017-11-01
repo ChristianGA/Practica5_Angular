@@ -1,4 +1,5 @@
-import { Component, Input, EventEmitter, Output } from '@angular/core';
+import { User } from '../user';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { Post } from '../post';
 
@@ -11,7 +12,7 @@ export class PostPreviewComponent {
 
   @Input() post: Post;
   @Output() clickParaDetalle = new EventEmitter<Post>();
-  @Output() clickParaAutor = new EventEmitter<Post>();
+  @Output() clickParaAutor = new EventEmitter<User>();
 
   /*=========================================================================|
   | Red Path                                                                 |
@@ -22,8 +23,8 @@ export class PostPreviewComponent {
   | dicho clic se realiza en el template de este componente, necesitas,      |
   | además, un manejador para el mismo.                                      |
   |=========================================================================*/
-  soloEsteAutor(): void {
-    this.clickParaAutor.emit(this.post);
+  soloEsteAutor(author: User): void {
+    this.clickParaAutor.emit(author);
   }
 
   /*=========================================================================|

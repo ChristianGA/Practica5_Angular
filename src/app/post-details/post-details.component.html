@@ -3,15 +3,16 @@
     <div class="avatar">
       <img [src]="post.author.avatar">
     </div>
-    <div class="author"
-    (click)="verMasAutor()">
+    <div class="author">
 
       <!--=======================================================================|
       | Red Path                                                                 |
       |==========================================================================|
       | Un clic sobre el autor debería navegar a su colección de posts.          |
       |========================================================================-->
-      <span class="name blink-font">{{ post.author.name }}</span>
+      <span
+      class="name blink-font"
+      (click)="verMasAutor(post.author)">{{ post.author.name }}</span>
 
       <!--=======================================================================|
       | Blue Path                                                                |

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Post } from '../post';
+import { User } from '../user';
 
 @Component({
   selector: 'app-posts-list',
@@ -21,8 +22,8 @@ export class PostsListComponent {
   | Router de la app. La ruta a navegar es '/posts/users', pasando como      |
   | parámetro el identificador del autor.                                    |
   |=========================================================================*/
-  verAutor(ruta: Post): void {
-    const authorID = ruta.author.id;
+  verAutor(ruta: User): void {
+    const authorID = ruta.id;
     console.log(authorID);
     this._router.navigate(['/posts/users', authorID])
   }

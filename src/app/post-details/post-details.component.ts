@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { User } from '../user';
 import { NativeWindow } from '../window';
 import { Post } from '../post';
 import { Category } from '../category';
@@ -40,8 +40,8 @@ export class PostDetailsComponent implements OnInit {
   | '/posts/users', pasando como parámetro el identificador del autor.       |
   |=========================================================================*/
 
-  verMasAutor(): void {
-    const authorID = this.post.author.id;
+  verMasAutor(author: User): void {
+    const authorID = author.id;
     this._router.navigate(['/posts/users', authorID])
   }
 

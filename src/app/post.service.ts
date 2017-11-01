@@ -2,6 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import { HttpParams } from '@angular/common/http';
 
 import { environment } from '../environments/environment';
 import { Post } from './post';
@@ -31,9 +32,11 @@ export class PostService {
     |                                                                          |
     | Una pista más, por si acaso: HttpParams.                                |
     |=========================================================================*/
-    const ahora = Date.now();
+    const ruta = {
+      params: this.getParams()
+    };
     return this._http.get<Post[]>(
-      `${environment.backendUri}/posts?publicationDate_lte=${ahora}&_sort=publicationDate&_order=DESC `);
+      `${environment.backendUri}/posts`, ruta);
   }
 
   getUserPosts(id: number): Observable<Post[]> {
@@ -57,9 +60,11 @@ export class PostService {
     |                                                                          |
     | Una pista más, por si acaso: HttpParams.                                 |
     |=========================================================================*/
-    const ahora = Date.now();
+    const ruta = {
+      params: this.getParams().set('author.id', id.toString())
+    };
     return this._http.get<Post[]>(
-      `${environment.backendUri}/posts?author.id=${id}&publicationDate_lte=${ahora}&_sort=publicationDate&_order=DESC `);
+      `${environment.backendUri}/posts`, ruta);
   }
 
   getCategoryPosts(id: number): Observable<Post[]> {
@@ -91,12 +96,14 @@ export class PostService {
     |                                                                          |
     | Una pista más, por si acaso: HttpParams.                                 |
     |=========================================================================*/
-    const ahora = Date.now();
+    const ruta = {
+      params: this.getParams()
+    };
     return this._http
-      .get<Post[]>(`${environment.backendUri}/posts?publicationDate_lte=${ahora}&_sort=publicationDate&_order=DESC `)
+      .get<Post[]>(`${environment.backendUri}/posts`, ruta)
       .map((posts: Post[]) => {
         return posts.filter((post: Post): boolean => {
-          return post.categories.find((category: Category): boolean => category.id === id) !== undefined;
+          return post.categories.find((category: Category): boolean => category.id == id) !== undefined;
         });
       });
   }
@@ -121,6 +128,10 @@ export class PostService {
       `${environment.backendUri}/posts`,
       post
     );
+  }
+
+  private getParams(){
+    return new HttpParams().set('_sort', 'publicationDate').set('_order', 'DESC').set('publicationDate_lte', Date.now().toString());
   }
 
 }
